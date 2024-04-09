@@ -85,9 +85,9 @@
 <!-- Bootstrap 4 -->
 <script src="dist/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!--SweetAlert2-->
-<script src="dist/plugins/sweetalert2/sweetalert2.min.css"></script>
+<script src="dist/plugins/sweetalert2/sweetalert2.min.js"></script>
 <!-- AdminLTE App -->
-<script src="dist/dist/js/adminlte.min.js"></script>
+<script src="dist/js/adminlte.min.js"></script>
 
 <?php include("sweet-alert-2.php");?>
 

@@ -8,11 +8,11 @@ session_start(); //SESSION_START IRÁ FAZER A CONEXÃO LOGIN COM O VALIDAR-LOGIN
 // PARA VALIDAÇÃO DE E-MAIL E SENHA
 if ($_POST) {
     //VERIFICAR SE FOI ENVIADO OS CAMPOS OBRIGATÓRIOS
-    if (empty($_POST["email"]) || empty($_POST["senha"])) {
+    if (empty($_POST['email']) || empty($_POST['senha'])) {
         $_SESSION["msg"] = "Por favor, preencha os campos obrigatórios";
         $_SESSION["tipo"] = "Warning";
 
-        header("location: login.php");
+        header("Location: login.php");
 
         exit;
     } else {
@@ -36,8 +36,6 @@ if ($_POST) {
             //ORGANIZA OS DADOS DO BANCO COMO OBJETOS NA VARIÁVEL $ROW
             $row = mysqli_fetch_object($query);
 
-            //CRIAR SESSÃO PARA VARIÁVEL GLOBAL
-            session_start();
 
             //DECLARO VARIÁVEL GLOBAL INFORMANDO QUE USUÁRIO
             //ESTÁ AUTENTICADO CORRETAMENTE
