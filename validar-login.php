@@ -10,54 +10,80 @@ if ($_POST) {
     //VERIFICAR SE FOI ENVIADO OS CAMPOS OBRIGATÓRIOS
     if (empty($_POST['email']) || empty($_POST['senha'])) {
         $_SESSION["msg"] = "Por favor, preencha os campos obrigatórios";
-        $_SESSION["tipo"] = "Warning";
+        $_SESSION["tipo"] = "error"; // SE COLOCAR O "WARNING" IRÁ APARECER UM AVISO NA TELA, PARA PREENCHER OS CAMPOS COMO O "ERROR"
+        $_SESSION["title"] = "Ops!"; // SE COLOCAR O "WARNING" IRÁ APARECER UM AVISO NA TELA, PARA PREENCHER OS CAMPOS COMO O "ERROR"
 
         header("Location: login.php");
 
         exit;
     } else {
-        include('./conexao_mysqli.php');
+        include('./conexao-pdo.php');
+
+        //RECUPERAR INFORMAÇÕES DO FORMULÁRIO LOGIN
         $email = trim($_POST["email"]);
         $senha = trim($_POST["senha"]);
 
-        //MONTAR SINTAXE SQL PARA CONSULTAR NO BANCO DE DADOS
-        $sql = "
+        //MONTAR SINTAXE SQL PARA CONSULTAR NO BANCO DE DADOS MYSQL
+        $stmt = $conn->prepare("
         SELECT pk_usuario, nome
         FROM usuarios
-        WHERE email LIKE '$email' 
-        AND senha LIKE  '$senha' 
+        WHERE email LIKE :email  
+        AND senha LIKE :senha  
               
-        ";
-        $query = mysqli_query($conn, $sql);
+        ");
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':senha', $senha);
 
-        // VERIFICAR SE ENCONTROU ALGUM REGISTRO NA TABELA
-        if (mysqli_num_rows($query) > 0) {
+        $stmt->execute();
+        //$query = mysqli_query($conn, $sql); --------------SINTAXE USADA ANTERIORMENTE NO ARQUIVO" AULA_PHP
 
+        if ($stmt->rowCount() > 0) {
             //ORGANIZA OS DADOS DO BANCO COMO OBJETOS NA VARIÁVEL $ROW
-            $row = mysqli_fetch_object($query);
-
-
+            $row = $stmt->fetch(PDO::FETCH_OBJ);
             //DECLARO VARIÁVEL GLOBAL INFORMANDO QUE USUÁRIO
             //ESTÁ AUTENTICADO CORRETAMENTE
+
             $_SESSION["autenticado"] = true;
             $_SESSION["pk_usuario"] = $row->pk_usuario;
             $_SESSION["nome_usuario"] = $row->nome;
             $_SESSION["tempo_login"] = time();
 
 
-            header('location: ./crud_mysqli');
+            header('location: ./'); //IRÁ LINKAR COM A TELA PRINCIPAL "INDEX"
             exit;
         } else {
-            echo "
-         <script>
-          alert('E-mail e/ou senha inválidos!');
-          window.location='./tela_login.php';
-         </script>
-          ";
+
+            $_SESSION["title"] = 'Ops!';
+            $_SESSION["msg"] = 'E-mail e/ou senha inválidos!';
+            $_SESSION["tipo"] = 'error';
+            
+
+            header('Location: login.php');
             exit;
         }
     }
 } else {
-    header('Location: ./tela_login.php');
+    header('Location: ./login.php');
     exit;
 }
+
+
+       
+
+        // VERIFICAR SE ENCONTROU ALGUM REGISTRO NA TABELA
+        //if (mysqli_num_rows($query) > 0) {
+
+            //ORGANIZA OS DADOS DO BANCO COMO OBJETOS NA VARIÁVEL $ROW
+            //$row = mysqli_fetch_object($query);
+
+
+            //DECLARO VARIÁVEL GLOBAL INFORMANDO QUE USUÁRIO
+            //ESTÁ AUTENTICADO CORRETAMENTE
+            /*$_SESSION["autenticado"] = true;
+            $_SESSION["pk_usuario"] = $row->pk_usuario;
+            $_SESSION["nome_usuario"] = $row->nome;
+            $_SESSION["tempo_login"] = time(); */
+
+
+            //header('location: ./crud_mysqli');
+            //exit;
