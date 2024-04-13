@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="dist/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <link rel="shortcut icon" href="./SSS.jpg" type="./SSS.jpg">
 
 </head>
 <body class="hold-transition login-page">
@@ -22,6 +23,7 @@
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
+      
       <a href="#" class="h4"><b>SSS</b><br>Senac System Service</a>
     </div>
     <div class="card-body">
