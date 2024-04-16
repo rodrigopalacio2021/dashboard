@@ -20,8 +20,9 @@ if ($_POST) {
         include('./conexao-pdo.php');
 
         //RECUPERAR INFORMAÇÕES DO FORMULÁRIO LOGIN
-        $email = trim($_POST["email"]);
-        $senha = trim($_POST["senha"]);
+        $email = trim($_POST['email']);
+        $senha = trim($_POST['senha']);
+        $remember = $_POST['remember'] ?? "off";
 
         //MONTAR SINTAXE SQL PARA CONSULTAR NO BANCO DE DADOS MYSQL
         $stmt = $conn->prepare("
@@ -38,6 +39,19 @@ if ($_POST) {
         //$query = mysqli_query($conn, $sql); --------------SINTAXE USADA ANTERIORMENTE NO ARQUIVO" AULA_PHP
 
         if ($stmt->rowCount() > 0) {
+
+        //VERIFICA SE O BOTÃO "LEMBRAR DE MIM" FOI ATIVADO
+        if($remember == "on"){
+            // cria um cookie no navegador salvando os dados de acesso 
+            setcookie("email", $email);
+            setcookie("senha", $senha);
+        }else{
+            // excluir cookies com dados de acesso
+            unset($_COOKIE["email"]);
+            unset($_COOKIE["senha"]);
+        }
+
+
             //ORGANIZA OS DADOS DO BANCO COMO OBJETOS NA VARIÁVEL $ROW
             $row = $stmt->fetch(PDO::FETCH_OBJ);
             //DECLARO VARIÁVEL GLOBAL INFORMANDO QUE USUÁRIO
@@ -60,6 +74,7 @@ if ($_POST) {
             exit;
         } else {
 
+            //verificar se os dados foram inseridos corretamente no campo "email" e "senha" ou se a senha foi digitada errada
             $_SESSION["title"] = 'Ops!';
             $_SESSION["msg"] = 'E-mail e/ou senha inválidos!';
             $_SESSION["tipo"] = 'error';
