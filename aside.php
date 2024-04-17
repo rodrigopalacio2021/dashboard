@@ -1,7 +1,7 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
+<aside id="#asideMenu" class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-        <img src="./SSS.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-5" style="opacity: .8">
+        <img src="<?php echo caminhoURL;?>/SSS.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-5" style="opacity: .8">
         <span class="brand-text font-weight-light">SSS</span>
     </a>
 
@@ -10,7 +10,7 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="./my.png" class="img-circle elevation-5" alt="User Image">
+                <img src="<?php echo caminhoURL;?>/my.png" class="img-circle elevation-5" alt="User Image">
             </div>
             <div class="info">
                 <a href="#" class="d-block"><?php echo $_SESSION["nome_usuario"]; ?></a>
@@ -34,7 +34,7 @@
 
                 </li>
                 <li class="nav-item">
-                    <a href="./ordens-servico" class="nav-link">
+                    <a href=" <?php echo caminhoURL;?>/ordens-servico" class="nav-link">
                         <i class="nav-icon bi bi-cash"></i>
                         <p>
                             Ordens de Serviço
@@ -44,7 +44,7 @@
                 </li>
                 <li class="nav-header">CONFIGURAÇÕES</li>
                 <li class="nav-item">
-                    <a href="./clientes" class="nav-link">
+                    <a href="<?php echo caminhoURL;?>/clientes" class="nav-link">
                         <i class="nav-icon bi bi-people"></i>
                         <p>
                             Clientes
@@ -55,7 +55,7 @@
                     
                 </li>
                 <li class="nav-item">
-                    <a href="./servicos" class="nav-link">
+                    <a href="<?php echo caminhoURL;?>/servicos" class="nav-link">
                         <i class="nav-icon bi bi-tools"></i>
                         <p>
                             Serviços

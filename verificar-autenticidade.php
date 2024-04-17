@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+//CAMINHO FIXO DO SOFTWARE WEB
+define("caminhoURL", "http://localhost/marcio_rodrigo/dashboard");     //"DEFINE" É UMA CONSTANTE E NÃO UMA VARIÁVEL, O VALOR NAO PODE SER MODIFICADO
+
 
 //VERIFICA SE O USUÁRIO NÃO ESTÁ CONECTADO
 if ($_SESSION["autenticado"] != true) {

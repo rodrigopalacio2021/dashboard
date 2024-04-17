@@ -1,6 +1,10 @@
+<!--O COMANDO "../" RECUA UMA PASTA, PARA PODE ACESSAR OS Arquivos dentro da pasta "dist"-->
+
+
+
 <?php
-include('verificar-autenticidade.php'); //O COMANDO "INCLUDE" IRÁ INCLUIR OU LINKAR A PÁGINA "VERIFICAR-AUTENTICIDADE.PHP" COM O "INDEX.PHP".
-include('conexao-pdo.php'); //O COMANDO "INCLUDE" IRÁ INCLUIR OU LINKAR A PÁGINA "VERIFICAR-AUTENTICIDADE.PHP" COM O "INDEX.PHP".
+include('../verificar-autenticidade.php'); //O COMANDO "INCLUDE" IRÁ INCLUIR OU LINKAR A PÁGINA "VERIFICAR-AUTENTICIDADE.PHP" COM O "INDEX.PHP".
+include('../conexao-pdo.php'); //O COMANDO "INCLUDE" IRÁ INCLUIR OU LINKAR A PÁGINA "VERIFICAR-AUTENTICIDADE.PHP" COM O "INDEX.PHP".
 ?>
 
 
@@ -16,17 +20,17 @@ include('conexao-pdo.php'); //O COMANDO "INCLUDE" IRÁ INCLUIR OU LINKAR A PÁGI
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="dist/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="../dist/plugins/fontawesome-free/css/all.min.css">
   <!--Bootstrap 4-->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <!-- Tempusdominus Bootstrap 4 -->
-  <link rel="stylesheet" href="dist/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <link rel="stylesheet" href="../dist/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
   <!-- iCheck -->
-  <link rel="stylesheet" href="dist/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <link rel="stylesheet" href="../dist/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="../dist/css/adminlte.min.css">
   <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="dist/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <link rel="stylesheet" href="../dist/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <link rel="shortcut icon" href="./SSS.jpg" type="image/x-icon">
 
 </head>
@@ -40,11 +44,11 @@ include('conexao-pdo.php'); //O COMANDO "INCLUDE" IRÁ INCLUIR OU LINKAR A PÁGI
     </div>
 
     <!-- Navbar   -->
-    <?php include("nav.php"); ?>
+    <?php include("../nav.php"); ?>
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-    <?php include("aside.php"); ?>
+    <?php include("../aside.php"); ?>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -171,7 +175,7 @@ include('conexao-pdo.php'); //O COMANDO "INCLUDE" IRÁ INCLUIR OU LINKAR A PÁGI
       <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-    <?php include("footer.php"); ?>
+    <?php include("../footer.php"); ?>
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
@@ -182,32 +186,32 @@ include('conexao-pdo.php'); //O COMANDO "INCLUDE" IRÁ INCLUIR OU LINKAR A PÁGI
   <!-- ./wrapper -->
 
   <!-- jQuery -->
-  <script src="dist/plugins/jquery/jquery.min.js"></script>
+  <script src="../dist/plugins/jquery/jquery.min.js"></script>
   <!-- jQuery UI 1.11.4 -->
-  <script src="dist/plugins/jquery-ui/jquery-ui.min.js"></script>
+  <script src="../dist/plugins/jquery-ui/jquery-ui.min.js"></script>
   <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
   <script>
     $.widget.bridge('uibutton', $.ui.button)
   </script>
   <!-- Bootstrap 4 -->
-  <script src="dist/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../dist/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Tempusdominus Bootstrap 4 -->
-  <script src="dist/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+  <script src="../dist/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 
   <!-- overlayScrollbars -->
-  <script src="dist/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+  <script src="../dist/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 
   <!-- ChartJS  ========================================PLUGIN DO GRÁFICO==================================================-->
-  <script src="dist/plugins/chart.js/Chart.min.js"></script>
+  <script src="../dist/plugins/chart.js/Chart.min.js"></script>
 
 
   <!-- AdminLTE App -->
-  <script src="dist/js/adminlte.js"></script>
+  <script src="../dist/js/adminlte.js"></script>
   <!-- AdminLTE for demo purposes -->
-  <script src="dist/js/demo.js"></script>
+  <script src="../dist/js/demo.js"></script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-  <script src="dist/js/pages/dashboard.js"></script>
+  <script src="../dist/js/pages/dashboard.js"></script>
 
 
 

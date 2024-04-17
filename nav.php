@@ -1,4 +1,4 @@
-<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+<nav id="navTopo" class="main-header navbar navbar-expand navbar-white navbar-light">
   <!-- Left navbar links -->
   <ul class="navbar-nav">
     <li class="nav-item">
@@ -59,7 +59,7 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="./logout.php">
+      <a href="<?php echo caminhoURL;?>/logout.php" class="nav-link" >
         <i class="fas fa-sign-out-alt"></i>
       </a>
     </li>
