@@ -53,112 +53,56 @@ include('../conexao-pdo.php'); //O COMANDO "INCLUDE" IRÁ INCLUIR OU LINKAR A P�
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
       <!-- Content Header (Page header) -->
-      <div class="content-header">
-        <div class="container-lg">
-          <div class="row mb-2">
-            <div class="col-sm-6">
-              <h1 class="m-0">Página inicial</h1>
-            </div><!-- /.col -->
-            <!-- /.col -->
-          </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-      </div>
-      <!-- /.content-header -->
+
 
       <!-- Main content -->
       <section class="content">
         <div class="container-fluid">
-          <!-- Small boxes (Stat box) -->
-          <div class="row">
 
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-gradient-info">
-                <div class="inner">
-                  <h3>150</h3>
-
-                  <p>Ordens de serviço</p>
-                </div>
-                <div class="icon">
-                  <i class="bi bi-cash"></i>
-                </div>
-                <a href="./ordens-servico" class="small-box-footer">Ver todos <i class="fas fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-gradient-success">
-                <div class="inner">
-                  <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                  <p>O.S. concluídas </p>
-                </div>
-                <div class="icon">
-                  <i class="bi bi-graph-up-arrow"></i>
-                </div>
-                <a href="./ordens-servico" class="small-box-footer">Ver todos <i class="fas fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-gradient-warning">
-                <div class="inner">
-                  <h3>44</h3>
-
-                  <p>Clientes</p>
-                </div>
-                <div class="icon">
-                  <i class="bi bi-people"></i>
-                </div>
-                <a href="./clientes" class="small-box-footer">Ver todos <i class="fas fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-            <div class="col-lg-3 col-6">
-              <!-- small box -->
-              <div class="small-box bg-gradient-danger">
-                <div class="inner">
-                  <h3>65</h3>
-
-                  <p>Serviços</p>
-                </div>
-                <div class="icon">
-                  <i class="bi bi-tools"></i>
-                </div>
-                <a href="./servicos" class="small-box-footer">Ver todos <i class="fas fa-arrow-circle-right"></i></a>
-              </div>
-            </div>
-            <!-- ./col -->
-          </div>
-          <!-- /.row -->
           <!-- Main row -->
 
 
           <!--===================================================================================================================================================-->
           <div class="row">
             <div class="col">
-              <!-- BAR CHART -->
-              <div class="card card-success">
-                <div class="card-header">
-                  <h3 class="card-title">Bar Chart</h3>
 
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                      <i class="fas fa-times"></i>
-                    </button>
-                  </div>
+              <div class="card card-primary card-outline">
+                <div class="card-header">
+                  <h3 class="card-title">Lista de serviços</h3>
+
+
                 </div>
-                <div class="card-body bg-gradient-dark">
-                  <div class="chart">
-                    <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                  </div>
+                <div class="card-body">
+                  <table class="table" class="table-responsive">
+                    <thead class="table-dark">
+                      <tr>
+                        <th>CÓD</th>
+                        <th class="text-center">SERVICO</th>
+                        <th>OPÇÕES</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-success">
+                      <tr>
+                        <td>1</td>
+                        <td class="text-center">Manutenção de micro</td>
+                        <td>
+                          <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle
+                             dropdown-icon" data-toggle="dropdown">
+                              <i class="bi bi-tools"></i>
+                            </button>
+                            <div class="dropdown-menu" role="menu">
+                              <a class="dropdown-item" href="#">
+                                <i class="bi bi-pencil"></i>Editar</a>
+                              </a>
+                              <a class="dropdown-item" href="#">
+                                <i class="bi bi-trash"></i>Remover</a>
+                              </a>
+                            </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
                 <!-- /.card-body -->
               </div>
@@ -202,10 +146,6 @@ include('../conexao-pdo.php'); //O COMANDO "INCLUDE" IRÁ INCLUIR OU LINKAR A P�
   <!-- overlayScrollbars -->
   <script src="../dist/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 
-  <!-- ChartJS  ========================================PLUGIN DO GRÁFICO==================================================-->
-  <script src="../dist/plugins/chart.js/Chart.min.js"></script>
-
-
   <!-- AdminLTE App -->
   <script src="../dist/js/adminlte.js"></script>
   <!-- AdminLTE for demo purposes -->
@@ -224,70 +164,21 @@ include('../conexao-pdo.php'); //O COMANDO "INCLUDE" IRÁ INCLUIR OU LINKAR A P�
 
         // pegar atributo "class" do objeto
         var classMode = $("#theme-mode").attr("class")
-        if(classMode == "fas fa-sun"){
+        if (classMode == "fas fa-sun") {
           $("body").removeClass("dark-mode");
           $("#theme-mode").attr("class", "fas fa-moon");
-          $("#navTopo").attr( "class", "main-header navbar navbar-expand navbar-white navbar-light");
-          $("#asideMenu").attr( "class", "main-sidebar sidebar-light-primary elevation-4");
-          
-        } else{
-          $("body"). addClass("dark-mode");
+          $("#navTopo").attr("class", "main-header navbar navbar-expand navbar-white navbar-light");
+          $("#asideMenu").attr("class", "main-sidebar sidebar-light-primary elevation-4");
+
+        } else {
+          $("body").addClass("dark-mode");
           $("#theme-mode").attr("class", "fas fa-sun");
           $("#navTopo").attr("class", "main-header navbar navbar-expand navbar-black navbar-dark");
-          $("#asideMenu").attr( "class", "main-sidebar sidebar-dark-primary elevation-4");
+          $("#asideMenu").attr("class", "main-sidebar sidebar-dark-primary elevation-4");
         }
       });
-//=========================================================================================================================================
-      var areaChartData = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        datasets: [{
-            label: 'Digital Goods',
-            backgroundColor: 'rgba(60,141,188,0.9)',
-            borderColor: 'rgba(60,141,188,0.8)',
-            pointRadius: false,
-            pointColor: '#3b8bba',
-            pointStrokeColor: 'rgba(60,141,188,1)',
-            pointHighlightFill: '#fff',
-            pointHighlightStroke: 'rgba(60,141,188,1)',
-            data: [28, 48, 40, 19, 86, 27, 90]
-          },
-          {
-            label: 'Electronics',
-            backgroundColor: 'rgba(210, 214, 222, 1)',
-            borderColor: 'rgba(210, 214, 222, 1)',
-            pointRadius: false,
-            pointColor: 'rgba(210, 214, 222, 1)',
-            pointStrokeColor: '#c1c7d1',
-            pointHighlightFill: '#fff',
-            pointHighlightStroke: 'rgba(220,220,220,1)',
-            data: [65, 59, 80, 81, 56, 55, 40]
-          },
-        ]
-      }
-
-      //-------------
-      //- BAR CHART -
-      //-------------
-      var barChartCanvas = $('#barChart').get(0).getContext('2d')
-      var barChartData = $.extend(true, {}, areaChartData)
-      var temp0 = areaChartData.datasets[0]
-      var temp1 = areaChartData.datasets[1]
-      barChartData.datasets[0] = temp1
-      barChartData.datasets[1] = temp0
-
-      var barChartOptions = {
-        responsive: true,
-        maintainAspectRatio: false,
-        datasetFill: false
-      }
-
-      new Chart(barChartCanvas, {
-        type: 'bar',
-        data: barChartData,
-        options: barChartOptions
-      })
-
     })
+    //=========================================================================================================================================
   </script>
   <!--=====================================================================================================================-->
 </body>
