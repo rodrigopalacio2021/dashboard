@@ -103,8 +103,7 @@ if(empty($_GET["ref"])){
                             <div class="card card-primary card-outline">
                                 <div class="card-header">
                                     <h3 class="card-title">Lista de serviços</h3>
-
-
+                                    
                                 </div>
                                 <div class="card-body">
                                     <div class="row">

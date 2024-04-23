@@ -71,7 +71,10 @@ include('../conexao-pdo.php'); //O COMANDO "INCLUDE" IRÁ INCLUIR OU LINKAR A P�
               <div class="card card-primary card-outline">
                 <div class="card-header">
                   <h3 class="card-title">Lista de serviços</h3>
-
+                  <a href="./form.php" class="btn btn-primary float-right btn-sm ">
+                                        Adicionar 
+                                        <i class="bi bi-plus"></i>
+                                    </a>
 
                 </div>
                 <div class="card-body">
