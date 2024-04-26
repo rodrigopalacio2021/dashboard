@@ -1,6 +1,6 @@
 <?php
-
-session_start(); // INICIA A SESSÃO 
+// SEMPRE QUE A SESSÃO TIVE INICIADA E APARECER A MSG DE ERRO,COLOCAR O "@" PARA QUE ELE ENTENDA QUE A SESSÃO "SESSION_START" JÁ ESTÁ INICIADA
+@session_start(); // INICIA A SESSÃO 
 //ISSET VERIFICA SE a sessão foi iniciada 
 if(isset($_SESSION["tipo"]) && isset($_SESSION["title"]) && isset($_SESSION["msg"])){
    echo"

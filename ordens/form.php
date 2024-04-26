@@ -153,12 +153,40 @@ if (empty($_GET["ref"])) {
                                                             <tbody class="">
                                                                 <tr>
                                                                     <td>
-                                                                        <select class="form-select" name="" id="">
+                                                                        <select class="form-select" >
+                                                                         <?php
+                                                                         $sql = "
+                                                                         SELECT pk_servico, servico
+                                                                         FROM servicos
+                                                                         ORDER BY servico
+                                                                         
+                                                                         ";
+                                                                        try{
+                                                                            $stmt = $conn->prepare($sql);
+                                                                            $stmt->execute();
+
+                                                                            $dados = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+                                                                            foreach ($dados as $key => $row){
+                                                                               echo '<option value="'. $row-> pk_servico . '">'. $row-> servico . '</option>';
+                                                                            }
+                                                                        }catch(Exception $ex){
+                                                                         $_SESSION["tipo"] = "error";
+                                                                         $_SESSION["title"] = "Ops!";
+                                                                         $_SESSION["msg"] = $ex->getMessage();
+
+                                                                         header("Location: ./");
+                                                                         exit;
+
+                                                                        }
+
+                                                                         ?>
+
                                                                             <option value="">--Selecione--</option>
                                                                         </select>
                                                                     </td>
                                                                     <td>
-                                                                        <input class="form-control" type="text" name="" id="">
+                                                                        <input class="form-control" type="number" name="" id="">
                                                                     </td>
                                                                     <td class="text-center">
             
@@ -232,11 +260,27 @@ if (empty($_GET["ref"])) {
     <link rel="stylesheet" href="../dist/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <?php
-    include("../sweet_alert2.php");
+    include("../sweet-alert-2.php");
     ?>
 
     <script>
         $(function() {
+
+        $("#cpf").blur(function(){
+         // LIMPAR INPUT DE NOME
+            $("#nome").val("");
+            // FAZ A REQUISIÇÃO PARA O ARQUIVO "CONSULTAR_CPF.PHP"
+            $.getJSON(
+                'consultar_cpf.php',
+                // define os dados a serem eviados
+                function(result){
+                    console.logo(result)
+                }
+            ) 
+
+        });
+
+
             // navbar-white navbar-light
             // sidebar-dark-primary
 

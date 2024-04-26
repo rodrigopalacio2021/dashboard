@@ -169,7 +169,7 @@ include('../conexao-pdo.php');
     <!-- SWeetAlert2 -->
     <script src="../dist/plugins/sweetalert2/sweetalert2.min.js"></script>
     <?php
-    include("../sweet_alert2.php");
+    include("../sweet-alert-2.php");
     ?>
 
     <script>
