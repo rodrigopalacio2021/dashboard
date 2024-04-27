@@ -3,6 +3,36 @@
 include('../verificar-autenticidade.php');
 include('../conexao-pdo.php');
 
+$pagina_ativa = 'ordens';
+
+// INICIA CONSTRUÇÃO DO SELECT DOS SERVICOS
+    $sql = "
+   SELECT pk_servico, servico                                                                      
+       FROM servicos                                                                  
+   ORDER BY servico                                                                      
+                                                                         
+    ";
+try{
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+
+    $dados = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+    $options = '<option value="">--Selecione--</option>';
+
+    foreach ($dados as $key => $row){
+      $options .= '<option value="'. $row-> pk_servico . '">'. $row-> servico . '</option>';
+    }
+}catch(Exception $ex){
+    $_SESSION["tipo"] = "error";
+    $_SESSION["title"] = "Ops!";
+    $_SESSION["msg"] = $ex->getMessage();
+
+    header("Location: ./");
+    exit;
+
+}
+  
 
 // VERIFICA SE NÃO ESTÁ VINDO ID NA URL
 if (empty($_GET["ref"])) {
@@ -136,13 +166,13 @@ if (empty($_GET["ref"])) {
                                                 <div class="card card-warning card-outline">
                                                     <div class="card-header">
                                                         <h3 class="card-title">Lista de Ordens de Serviço</h3>
-                                                        <a href="./form.php" class="btn btn-primary float-end btn-sm ">
+                                                        <button type="button" class="btn btn-primary float-end btn-sm " id="btn-add">
                                                             Adicionar
                                                             <i class="bi bi-plus"></i>
                                                         </a>
                                                     </div>
                                                     <div class="card-body">
-                                                        <table class="table">
+                                                        <table class="table" id="tabela_servicos">
                                                             <thead>
                                                                 <tr>
                                                                     <th>Serviço</th>
@@ -154,35 +184,8 @@ if (empty($_GET["ref"])) {
                                                                 <tr>
                                                                     <td>
                                                                         <select class="form-select" >
-                                                                         <?php
-                                                                         $sql = "
-                                                                         SELECT pk_servico, servico
-                                                                         FROM servicos
-                                                                         ORDER BY servico
-                                                                         
-                                                                         ";
-                                                                        try{
-                                                                            $stmt = $conn->prepare($sql);
-                                                                            $stmt->execute();
-
-                                                                            $dados = $stmt->fetchAll(PDO::FETCH_OBJ);
-
-                                                                            foreach ($dados as $key => $row){
-                                                                               echo '<option value="'. $row-> pk_servico . '">'. $row-> servico . '</option>';
-                                                                            }
-                                                                        }catch(Exception $ex){
-                                                                         $_SESSION["tipo"] = "error";
-                                                                         $_SESSION["title"] = "Ops!";
-                                                                         $_SESSION["msg"] = $ex->getMessage();
-
-                                                                         header("Location: ./");
-                                                                         exit;
-
-                                                                        }
-
-                                                                         ?>
-
-                                                                            <option value="">--Selecione--</option>
+                                                                         <?php echo $options; ?>
+                                                                            
                                                                         </select>
                                                                     </td>
                                                                     <td>
@@ -190,9 +193,13 @@ if (empty($_GET["ref"])) {
                                                                     </td>
                                                                     <td class="text-center">
             
+                                                                        <!--
+                                                                                "CÓDIGO DA LIXEIRA DESATIVADO"
+
                                                                         <a href="" class="btn btn-danger btn-sm"
                                                                         ><i class="bi bi-trash"></i>
-                                                                    </a>
+                                                                        </a> -->
+
                                                                     </td>
                                                                 </tr>
 
@@ -266,19 +273,58 @@ if (empty($_GET["ref"])) {
     <script>
         $(function() {
 
-        $("#cpf").blur(function(){
+        $("#cpf").change(function(){ //"CHANGE" QUNDO VC ALTERA O VALOR
          // LIMPAR INPUT DE NOME
             $("#nome").val("");
             // FAZ A REQUISIÇÃO PARA O ARQUIVO "CONSULTAR_CPF.PHP"
             $.getJSON(
-                'consultar_cpf.php',
+                'consultar_cpf.php',{
+                    cpf: $("#cpf").val()
+                },
+               
                 // define os dados a serem eviados
-                function(result){
-                    console.logo(result)
+                function(data){
+                    if(data['success']== true){
+                        $("#nome").val(data['dado']['nome']);
+                    }else{
+                        alert(data['dado']);
+                        $("#cpf").val("")
+                    }
                 }
             ) 
 
         });
+
+         $("#btn-add").click(function(){
+         var newRow = $("<tr>");
+         var cols ="";
+         cols += '<td>';
+         cols += '<select class="form-control" name="">';
+         cols += '<?php echo $options; ?>';
+         cols += '</select>';
+         cols += '</td>';
+         cols += '<td><input type="number" class="form-control" name=""></td>';
+         cols += '<td>';
+         cols += '<button class="btn btn-danger btn-sm" onclick="RemoveRow (this)" type="button"><i class="fas fa-trash"></i></button>';
+         cols += '</td>';
+         newRow.append(cols);
+         $("#tabela_servicos").append(newRow);
+         
+         }           
+        );
+
+        RemoveRow = function(item){
+           var tr = $(item).closest('tr');
+           tr.fadeOut(400, function(){
+            tr.remove();
+           });
+           return false;
+
+
+
+        }
+
+
 
 
             // navbar-white navbar-light

@@ -13,7 +13,7 @@ if ($_SESSION["autenticado"] != true) {
     header("Location: ./login.php");
     exit;
 } else {
-    $tempo_limite = 300; // SEGUNDOS
+    $tempo_limite = 600; // SEGUNDOS
     $tempo_atual = time();
 
 

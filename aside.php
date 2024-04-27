@@ -24,8 +24,8 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                <li class="nav-item menu-open">
-                    <a href="<?php echo caminhoURL;?>./" class="nav-link active">
+                <li class="nav-item">
+                    <a href="<?php echo caminhoURL;?>./" class="nav-link <?php $pagina_ativa == 'home' ? 'active' : '';?>">
                         <i class="nav-icon bi bi-house-fill"></i>
                         <p>
                             Página inicial
@@ -34,7 +34,7 @@
 
                 </li>
                 <li class="nav-item">
-                    <a href=" <?php echo caminhoURL;?>/ordens" class="nav-link">
+                    <a href=" <?php echo caminhoURL;?>/ordens" class="nav-link <?php echo $pagina_ativa == 'ordens' ? 'active' : '';?>">
                         <i class="nav-icon bi bi-cash"></i>
                         <p>
                             Ordens de Serviço
@@ -44,7 +44,7 @@
                 </li>
                 <li class="nav-header">CONFIGURAÇÕES</li>
                 <li class="nav-item">
-                    <a href="<?php echo caminhoURL;?>/clientes" class="nav-link">
+                    <a href="<?php echo caminhoURL;?>/clientes" class="nav-link <?php echo $pagina_ativa == 'clientes' ? 'active' : '';?>">
                         <i class="nav-icon bi bi-people"></i>
                         <p>
                             Clientes
@@ -55,7 +55,7 @@
                     
                 </li>
                 <li class="nav-item">
-                    <a href="<?php echo caminhoURL;?>/servicos" class="nav-link">
+                    <a href="<?php echo caminhoURL;?>/servicos" class="nav-link  <?php echo $pagina_ativa == 'servicos' ? 'active' : '';?>">
                         <i class="nav-icon bi bi-tools"></i>
                         <p>
                             Serviços

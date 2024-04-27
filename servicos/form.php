@@ -6,6 +6,9 @@
 include('../verificar-autenticidade.php'); //O COMANDO "INCLUDE" IRÁ INCLUIR OU LINKAR A PÁGINA "VERIFICAR-AUTENTICIDADE.PHP" COM O "INDEX.PHP".
 include('../conexao-pdo.php'); //O COMANDO "INCLUDE" IRÁ INCLUIR OU LINKAR A PÁGINA "VERIFICAR-AUTENTICIDADE.PHP" COM O "INDEX.PHP".
 
+$pagina_ativa = 'servicos';
+
+
 // VERIFICA SE NÃO ESTÁ VINDO O ID NA URL
 if(empty($_GET["ref"])){
     $pk_servico = "";
