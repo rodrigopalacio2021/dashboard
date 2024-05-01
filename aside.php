@@ -25,7 +25,7 @@
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="<?php echo caminhoURL;?>./" class="nav-link <?php $pagina_ativa == 'home' ? 'active' : '';?>">
+                    <a href="<?php echo caminhoURL;?>./" class="nav-link <?php echo $pagina_ativa == 'home' ? 'active' : '';?>">
                         <i class="nav-icon bi bi-house-fill"></i>
                         <p>
                             Página inicial

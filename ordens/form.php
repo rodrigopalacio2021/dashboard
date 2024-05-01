@@ -1,4 +1,3 @@
-
 <?php
 include('../verificar-autenticidade.php');
 include('../conexao-pdo.php');
@@ -6,13 +5,13 @@ include('../conexao-pdo.php');
 $pagina_ativa = 'ordens';
 
 // INICIA CONSTRUÇÃO DO SELECT DOS SERVICOS
-    $sql = "
+$sql = "
    SELECT pk_servico, servico                                                                      
        FROM servicos                                                                  
    ORDER BY servico                                                                      
                                                                          
     ";
-try{
+try {
     $stmt = $conn->prepare($sql);
     $stmt->execute();
 
@@ -20,19 +19,18 @@ try{
 
     $options = '<option value="">--Selecione--</option>';
 
-    foreach ($dados as $key => $row){
-      $options .= '<option value="'. $row-> pk_servico . '">'. $row-> servico . '</option>';
+    foreach ($dados as $key => $row) {
+        $options .= '<option value="' . $row->pk_servico . '">' . $row->servico . '</option>';
     }
-}catch(Exception $ex){
+} catch (Exception $ex) {
     $_SESSION["tipo"] = "error";
     $_SESSION["title"] = "Ops!";
     $_SESSION["msg"] = $ex->getMessage();
 
     header("Location: ./");
     exit;
-
 }
-  
+
 
 // VERIFICA SE NÃO ESTÁ VINDO ID NA URL
 if (empty($_GET["ref"])) {
@@ -60,7 +58,7 @@ if (empty($_GET["ref"])) {
     $stmt->bindParam(':pk_ordem_servico', $pk_ordem_servico);
     // EXECUTA A SINTAXE FINAL NO MYSQL
     $stmt->execute();
- // VERIFICAR SE ENCONTROU ALGUM REGISTRO NO BANCO DE DADOS
+    // VERIFICAR SE ENCONTROU ALGUM REGISTRO NO BANCO DE DADOS
     if ($stmt->rowCount() > 0) {
         $dado = $stmt->fetch(PDO::FETCH_OBJ);
         $data_ordem_servico = $dado->data_ordem_servico;
@@ -140,8 +138,15 @@ if (empty($_GET["ref"])) {
                                                     <input value="<?php echo $pk_ordem_servico; ?>" readonly type="number" name="pk_ordem_servico" id="pk_ordem_servico" class="form-control ">
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <label for="nome" class="form-label">CPF:</label>
-                                                    <input value="<?php echo $cpf; ?>" type="text" name="cpf" id="cpf" class="form-control" data-mask="000.000.000-00" required>
+                                                    <label for="cpf" class="form-label">CPF:</label>
+                                                    <div class="input-group">
+                                                        <input value="<?php echo $cpf ?>" type="text" name="cpf" id="cpf" class="form-control" data-mask="000.000.000-00" required minlength="14">
+                                                        <span class="input-group-append">
+                                                            <button type="button" class="btn btn-default btn-flat">
+                                                                <i id="btn-search" class="bi bi-search-heart"></i>
+                                                            </button>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                                 <div class="col-md">
                                                     <label for="nome" class="form-label">Cliente:</label>
@@ -169,7 +174,7 @@ if (empty($_GET["ref"])) {
                                                         <button type="button" class="btn btn-primary float-end btn-sm " id="btn-add">
                                                             Adicionar
                                                             <i class="bi bi-plus"></i>
-                                                        </a>
+                                                        </button>
                                                     </div>
                                                     <div class="card-body">
                                                         <table class="table" id="tabela_servicos">
@@ -181,15 +186,18 @@ if (empty($_GET["ref"])) {
                                                                 </tr>
                                                             </thead>
                                                             <tbody class="">
-                                                                <tr>
+                                                                <?php
+                                                                if (empty($pk_ordem_servico)) {
+                                                                    echo '
+                                                                    <tr>
                                                                     <td>
-                                                                        <select class="form-select" >
-                                                                         <?php echo $options; ?>
+                                                                        <select required class="form-select" name="fk_servico[]">
+                                                                         ' . $options . ' 
                                                                             
                                                                         </select>
                                                                     </td>
                                                                     <td>
-                                                                        <input class="form-control" type="number" name="" id="">
+                                                                        <input required class="form-control" type="number" name="valor[]" id="">
                                                                     </td>
                                                                     <td class="text-center">
             
@@ -202,6 +210,56 @@ if (empty($_GET["ref"])) {
 
                                                                     </td>
                                                                 </tr>
+
+                                                                    
+                                                                    
+                                                                    
+                                                                    ';
+                                                                } else {
+                                                                    $sql = "
+                                                                SELECT s.pk_servico, s.servico, rl.valor
+                                                                FROM servicos s
+                                                                JOIN rl_servicos_os rl ON rl.fk_servico = s.pk_servico
+                                                                WHERE rl.fk_ordem_servico = $pk_ordem_servico
+                                                                
+                                                                
+                                                                ";
+                                                                    try {
+                                                                        $stmt = $conn->prepare($sql);
+                                                                        $stmt->bindParam(':pk_ordem_servico', $pk_ordem_servico);
+                                                                        $stmt->execute();
+
+                                                                        $dados = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+                                                                        foreach ($dados as $key => $row) {
+                                                                            echo '
+                                                              <tr>
+                                                              <td>
+                                                              <select required class="form-control" name="fk_servico[]">
+                                                              <option selected value="' . $row->pk_servico . '">' . $row->servico . '</option>
+                                                              ' . $options . '
+                                                              </select>
+                                                              <td>
+                                                              <td>
+                                                                 <input value="' . $row->valor . '" required class="form-control" type="numer" name="valor[]">
+                                                                 </td>
+                                                                 <td></td>
+                                                                 </tr>
+                                                                                                                       
+                                                              
+                                                              
+                                                              ';
+                                                                        }
+                                                                    } catch (PDOException $ex) {
+                                                                        $_SESSION["tipo"] = "error";
+                                                                        $_SESSION["title"] = "Ops!";
+                                                                        $_SESSION["tipo"] = $ex->getMessage();
+                                                                    }
+                                                                }
+                                                                ?>
+
+
+
 
                                                             </tbody>
                                                         </table>
@@ -270,7 +328,7 @@ if (empty($_GET["ref"])) {
     include("../sweet-alert-2.php");
     ?>
 
-    <script>
+    <!--<script>
         $(function() {
 
         $("#cpf").change(function(){ //"CHANGE" QUNDO VC ALTERA O VALOR
@@ -300,7 +358,7 @@ if (empty($_GET["ref"])) {
          var cols ="";
          cols += '<td>';
          cols += '<select class="form-control" name="">';
-         cols += '<?php echo $options; ?>';
+         cols += '<php echo $options; ?>';
          cols += '</select>';
          cols += '</td>';
          cols += '<td><input type="number" class="form-control" name=""></td>';
@@ -323,10 +381,59 @@ if (empty($_GET["ref"])) {
 
 
         }
+-->
+
+    <script>
+        $(function() {
 
 
+            $("#btn-search").click(function() {
+                // limpa input de nome
+                $("#nome").val("");
+                // faz a requisição para o arquivo "consultar_cpf.php"
+                $.getJSON(
+                    'consultar_cpf.php', {
+                        cpf: $("#cpf").val()
+                    },
+                    function(data) {
+                        if (data['success'] == true) {
+                            $("#nome").val(data['dado']['nome']);
+                        } else {
+                            alert(data['dado'])
+                            $("#cpf").val("")
+                            $("#cpf").focus()
+                        }
+                    }
+                )
+            })
 
 
+            $("#btn-add").click(function() {
+                var newRow = $("<tr>");
+                var cols = "";
+                cols += '<td>';
+                cols += '<select class="form-select" name="fk_servico[]">';
+                cols += '<?php echo $options ?>';
+                cols += '</select>';
+                cols += '</td>';
+                cols += '<td><input class="form-control" type="number" name="valor[]" id=""></td>'
+                cols += '<td class="text-center"><button class="btn btn-danger btn-sm" onclick="RemoveRow(this)" type="button" ><i class="bi bi-trash"></i></button></td>'
+                newRow.append(cols);
+                $("#tabela_servicos").append(newRow);
+            });
+
+            // Remover linha
+
+
+            RemoveRow = function(item) {
+                var tr = $(item).closest('tr');
+                tr.fadeOut(200, function() {
+                    tr.remove();
+                });
+                return false;
+
+
+            }
             // navbar-white navbar-light
             // sidebar-dark-primary
 

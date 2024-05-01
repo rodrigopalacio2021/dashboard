@@ -80,7 +80,7 @@ $pagina_ativa = "home";
                 <div class="icon">
                   <i class="bi bi-cash"></i>
                 </div>
-                <a href="./ordens-servico" class="small-box-footer">Ver todos <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="./ordens" class="small-box-footer">Ver todos <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
 
