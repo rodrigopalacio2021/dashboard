@@ -3,12 +3,51 @@ include('verificar-autenticidade.php'); //O COMANDO "INCLUDE" IRÁ INCLUIR OU LI
 include('conexao-pdo.php'); //O COMANDO "INCLUDE" IRÁ INCLUIR OU LINKAR A PÁGINA "VERIFICAR-AUTENTICIDADE.PHP" COM O "INDEX.PHP".
 
 $pagina_ativa = "home";
+
+$sql = "
+SELECT COUNT(pk_ordem_servico) total_os,
+(
+  SELECT COUNT(pk_cliente)
+  FROM clientes
+) total_clientes,
+(
+  SELECT COUNT(pk_servico)
+  FROM servicos
+  ) total_servicos,
+  (
+    SELECT COUNT(pk_ordem_servico)
+    FROM ordens_servicos
+    WHERE data_fim <> '0000-00-00'
+    ) total_os_fechadas
+    FROM ordens_servicos
+
+";
+
+try{
+  $stmt = $conn->prepare($sql);
+  $stmt->execute();
+
+  $dados = $stmt->fetch(PDO::FETCH_OBJ);
+
+if($dados->total_os == 0){
+  $porcentagem_os_concluida = 0;
+}else{
+  $porcentagem_os_concluida = number_format((($dados->total_os_fechadas / $dados->total_os)* 100 ),0)  ;
+}
+
+  
+
+} catch(PDOException $ex) {
+  $_SESSION["tipo"] = "error";
+  $_SESSION["title"] = "Ops!";
+  $_SESSION["msg"] = $ex->getMessage();
+}
 ?>
 
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="PT-BR">
 
 <head>
   <meta charset="utf-8">
@@ -38,7 +77,7 @@ $pagina_ativa = "home";
 
     <!-- Preloader -->
     <div class="preloader flex-column justify-content-center align-items-center">
-      <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+      <img class="animation__shake" src=".//SSS.jpg" alt="AdminLTELogo" height="60" width="60">
     </div>
 
     <!-- Navbar   -->
@@ -73,7 +112,7 @@ $pagina_ativa = "home";
               <!-- small box -->
               <div class="small-box bg-gradient-info">
                 <div class="inner">
-                  <h3>150</h3>
+                  <h3><?php echo $dados->total_os;?></h3>
 
                   <p>Ordens de serviço</p>
                 </div>
@@ -89,14 +128,14 @@ $pagina_ativa = "home";
               <!-- small box -->
               <div class="small-box bg-gradient-success">
                 <div class="inner">
-                  <h3>53<sup style="font-size: 20px">%</sup></h3>
+                  <h3><?php echo $porcentagem_os_concluida;?><sup style="font-size: 20px">%</sup></h3>
 
                   <p>O.S. concluídas </p>
                 </div>
                 <div class="icon">
                   <i class="bi bi-graph-up-arrow"></i>
                 </div>
-                <a href="./ordens-servico" class="small-box-footer">Ver todos <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="./ordens" class="small-box-footer">Ver todos <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
 
@@ -105,7 +144,7 @@ $pagina_ativa = "home";
               <!-- small box -->
               <div class="small-box bg-gradient-warning">
                 <div class="inner">
-                  <h3>44</h3>
+                  <h3><?php echo $dados->total_clientes;?> </h3>
 
                   <p>Clientes</p>
                 </div>
@@ -120,7 +159,7 @@ $pagina_ativa = "home";
               <!-- small box -->
               <div class="small-box bg-gradient-danger">
                 <div class="inner">
-                  <h3>65</h3>
+                  <h3><?php echo $dados->total_servicos;?></h3>
 
                   <p>Serviços</p>
                 </div>
@@ -207,7 +246,7 @@ $pagina_ativa = "home";
   <!-- AdminLTE App -->
   <script src="dist/js/adminlte.js"></script>
   <!-- AdminLTE for demo purposes -->
-  
+
   <script src="dist/js/pages/dashboard.js"></script>
 
 
@@ -221,20 +260,20 @@ $pagina_ativa = "home";
 
         // pegar atributo "class" do objeto
         var classMode = $("#theme-mode").attr("class")
-        if(classMode == "fas fa-sun"){
+        if (classMode == "fas fa-sun") {
           $("body").removeClass("dark-mode");
           $("#theme-mode").attr("class", "fas fa-moon");
-          $("#navTopo").attr( "class", "main-header navbar navbar-expand navbar-white navbar-light");
-          $("#asideMenu").attr( "class", "main-sidebar sidebar-light-primary elevation-4");
-          
-        } else{
-          $("body"). addClass("dark-mode");
+          $("#navTopo").attr("class", "main-header navbar navbar-expand navbar-white navbar-light");
+          $("#asideMenu").attr("class", "main-sidebar sidebar-light-primary elevation-4");
+
+        } else {
+          $("body").addClass("dark-mode");
           $("#theme-mode").attr("class", "fas fa-sun");
           $("#navTopo").attr("class", "main-header navbar navbar-expand navbar-black navbar-dark");
-          $("#asideMenu").attr( "class", "main-sidebar sidebar-dark-primary elevation-4");
+          $("#asideMenu").attr("class", "main-sidebar sidebar-dark-primary elevation-4");
         }
       });
-//=========================================================================================================================================
+      //=========================================================================================================================================
       var areaChartData = {
         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
         datasets: [{

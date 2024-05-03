@@ -19,7 +19,7 @@ if(empty($_GET["ref"])){
         $stmt ->execute();
 
         $_SESSION["tipo"] = 'success';
-        $_SESSION["title"] = 'Oba!';
+        $_SESSION["title"] = 'Ok!';
         $_SESSION["msg"] = 'Registro removido com sucesso!';
 
         header("location: ./");

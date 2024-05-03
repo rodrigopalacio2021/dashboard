@@ -201,12 +201,7 @@ if (empty($_GET["ref"])) {
                                                                     </td>
                                                                     <td class="text-center">
             
-                                                                        <!--
-                                                                                "CÓDIGO DA LIXEIRA DESATIVADO"
-
-                                                                        <a href="" class="btn btn-danger btn-sm"
-                                                                        ><i class="bi bi-trash"></i>
-                                                                        </a> -->
+                                                                       
 
                                                                     </td>
                                                                 </tr>
@@ -220,7 +215,7 @@ if (empty($_GET["ref"])) {
                                                                 SELECT s.pk_servico, s.servico, rl.valor
                                                                 FROM servicos s
                                                                 JOIN rl_servicos_os rl ON rl.fk_servico = s.pk_servico
-                                                                WHERE rl.fk_ordem_servico = $pk_ordem_servico
+                                                                WHERE rl.fk_ordem_servico = :pk_ordem_servico
                                                                 
                                                                 
                                                                 ";
@@ -239,7 +234,7 @@ if (empty($_GET["ref"])) {
                                                               <option selected value="' . $row->pk_servico . '">' . $row->servico . '</option>
                                                               ' . $options . '
                                                               </select>
-                                                              <td>
+                                                              </td>
                                                               <td>
                                                                  <input value="' . $row->valor . '" required class="form-control" type="numer" name="valor[]">
                                                                  </td>
@@ -257,9 +252,6 @@ if (empty($_GET["ref"])) {
                                                                     }
                                                                 }
                                                                 ?>
-
-
-
 
                                                             </tbody>
                                                         </table>
