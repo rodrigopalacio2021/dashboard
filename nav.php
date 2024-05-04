@@ -25,7 +25,13 @@ try{
   $dados = $stmt->fetch(PDO::FETCH_OBJ);
 
 $total_os_abertas = $dados->total_os - $dados->total_os_fechadas;
-$porcentagem_os_concluida = $dados->total_os_fechadas / $dados->total_os * 100;
+// VERIFICA SE HÁ O.S. PARA FAZER A DIVISÃO
+if($dados->total_os > 0) {
+  $porcentagem_os_concluida = $dados->total_os_fechadas / $dados->total_os* 100;
+}else{
+  $porcentagem_os_concluida = 0;
+}
+ 
   
 
 } catch(PDOException $ex) {
