@@ -19,24 +19,66 @@ if ($_POST) {
         $senha = trim($_POST["senha"]);
         $foto = $_FILES["foto"];
 
+        //sempre que quiser exibir uma array, usa-se o "VAR_DUMP" E PARA UMA STRING É O "ECHO".
+
+        // VERIFICA SE EXISTE UMA FOTO A SER SALVA// ERRO 4 É QUANDO A FOTO NAO FOI SELECIONADA 
+        if ($foto["error"] != 4) {
+            // verificar se o arquivo é uma imagem
+            $ext_permitidos = array(
+                "bmp",
+                "jpg",
+                "jpeg",
+                "png",
+                "jtif",
+                "tiff",
+
+            );
+            // ext_permitidos = ["bmp", "jpg", "jpeg", "png", "jtif", "tiff"];
+            $extensao = pathinfo($foto["name"], PATHINFO_EXTENSION);
+            //VERIFICA SE A EXTENSÃO DO ARQUIVO
+            // CONTÉM NO ARRAY EXT_PERMITIDOS
+            if (in_array($extensao, $ext_permitidos)) {
+                //GERAR NOME ÚNICO PARA O ARQUIVO
+                $novo_nome = hash("sha256", uniqid() . rand() . $foto["tmp_name"]) . "." . $extensao;
+
+                //MOVER O ARQUIVO PARA A PASTA "FOTOS
+                // COM O NOVO NOME
+                move_uploaded_file($foto["tmp_name"], "fotos/$novo_nome");
+                $update_foto = "foto = '$novo_nome'";
+
+                $_SESSION["foto"] = $novo_nome;
+            } else {
+                $_SESSION["tipo"] = "error";
+                $_SESSION["title"] = "Ops!";
+                $_session["msg"] = "Arquivo de imagem NÃO permitido.";
+                header("Location: ./");
+                exit;
+            }
+        } else {
+            $update_foto = "foto=foto";
+        }
+
+
         try {
             if (empty($senha)) {
                 $sql = "
-         UPDATE usuarios SET
-         nome = :nome,
-         email = :email
-         WHERE pk_usuario = :pk_usuario
+                    UPDATE usuarios SET
+                    nome = :nome,
+                    email = :email,
+                    $update_foto
+                    WHERE pk_usuario = :pk_usuario
          ";
                 $stmt = $conn->prepare($sql);
-                $stmt->bindParam(':nome', $nomeo);
+                $stmt->bindParam(':nome', $nome);
                 $stmt->bindParam(':email', $email);
                 $stmt->bindParam(':pk_usuario', $pk_usuario);
             } else {
                 $sql = "
-            UPDTATE usuarios SET
+            UPDATE usuarios SET
             nome = :nome,
             email = :email,
-            senha = :senha
+            senha = :senha,
+            $update_foto
             WHERE pk_usuario = :pk_usuario
          ";
                 $stmt = $conn->prepare($sql);
@@ -47,6 +89,15 @@ if ($_POST) {
             }
             // EXECUTA INSERT OU UPDATE ACIMA
             $stmt->execute();
+
+            //TRANFORMA STRING EM ARRAY, AONDE TIVER ESPAÇO " "
+            $nome_usuario = explode(" ", $nome);
+
+            //CONCATENA O PRIMEIRO NOME COM O SOBRENOME DO USUÁRIO
+            //$_SESSION["nome_usuario"] = $row->nome;
+
+            $_SESSION["nome_usuario"] = $nome_usuario[0] . " ". end($nome_usuario); //ESSA SINTAXE USA O ARRAY PARA QUEBRAR O SOBRENOME E NÃO DEIXAR O NOME INTEIRO
+            $_SESSION["tempo_login"] = time();
 
             $_SESSION["tipo"] = 'success';
             $_SESSION["title"] = 'Oba!';

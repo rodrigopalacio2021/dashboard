@@ -111,7 +111,7 @@ if ($stmt->rowCount() > 0) {
                                     <div class="card-body">
                                         <div class="row mb-3">
                                             <div class="col-md-2">
-                                                <img class="img-fluid rounded-circle" src="https://github.com/rodrigopalacio2021.png" alt="minha foto" width="300" height="300">
+                                                <img class="img-fluid rounded-circle" src="fotos/<?php echo $foto;?>" alt="minha foto" width="300" height="300">
                                             </div>
                                             <div class="col-md">
                                                 <div class="row mb-3">
@@ -134,7 +134,7 @@ if ($stmt->rowCount() > 0) {
                                             <div class="row">
                                                 <div class="col">
                                                     <label for="foto" class="form-label">Foto de perfil</label>
-                                                    <input type="file" class="form-control" id="foto">
+                                                    <input type="file" class="form-control" id="foto" name="foto">
                                                 </div>
                                             </div>
                                         </div>

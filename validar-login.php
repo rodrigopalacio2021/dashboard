@@ -26,7 +26,7 @@ if ($_POST) {
 
         //MONTAR SINTAXE SQL PARA CONSULTAR NO BANCO DE DADOS MYSQL
         $stmt = $conn->prepare("
-        SELECT pk_usuario, nome
+        SELECT pk_usuario, nome , foto
         FROM usuarios
         WHERE email LIKE :email  
         AND senha LIKE :senha  
@@ -59,6 +59,9 @@ if ($_POST) {
 
             $_SESSION["autenticado"] = true;
             $_SESSION["pk_usuario"] = $row->pk_usuario;
+            $_SESSION["nome_usuario"] = $row->nome;
+            $_SESSION["foto_usuario"] = $row->foto;
+            $_SESSION["tempo_login"] =time();
 
             //TRANFORMA STRING EM ARRAY, AONDE TIVER ESPAÇO " "
             $nome_usuario = explode(" ", $row->nome);
