@@ -23,21 +23,18 @@ SELECT COUNT(pk_ordem_servico) total_os,
 
 ";
 
-try{
+try {
   $stmt = $conn->prepare($sql);
   $stmt->execute();
 
   $dados = $stmt->fetch(PDO::FETCH_OBJ);
 
-if($dados->total_os == 0){
-  $porcentagem_os_concluida = 0;
-}else{
-  $porcentagem_os_concluida = number_format((($dados->total_os_fechadas / $dados->total_os)* 100 ),0)  ;
-}
-
-  
-
-} catch(PDOException $ex) {
+  if ($dados->total_os == 0) {
+    $porcentagem_os_concluida = 0;
+  } else {
+    $porcentagem_os_concluida = number_format((($dados->total_os_fechadas / $dados->total_os) * 100), 0);
+  }
+} catch (PDOException $ex) {
   $_SESSION["tipo"] = "error";
   $_SESSION["title"] = "Ops!";
   $_SESSION["msg"] = $ex->getMessage();
@@ -112,7 +109,7 @@ if($dados->total_os == 0){
               <!-- small box -->
               <div class="small-box bg-gradient-info">
                 <div class="inner">
-                  <h3><?php echo $dados->total_os;?></h3>
+                  <h3><?php echo $dados->total_os; ?></h3>
 
                   <p>Ordens de serviço</p>
                 </div>
@@ -128,7 +125,7 @@ if($dados->total_os == 0){
               <!-- small box -->
               <div class="small-box bg-gradient-success">
                 <div class="inner">
-                  <h3><?php echo $porcentagem_os_concluida;?><sup style="font-size: 20px">%</sup></h3>
+                  <h3><?php echo $porcentagem_os_concluida; ?><sup style="font-size: 20px">%</sup></h3>
 
                   <p>O.S. concluídas </p>
                 </div>
@@ -144,7 +141,7 @@ if($dados->total_os == 0){
               <!-- small box -->
               <div class="small-box bg-gradient-warning">
                 <div class="inner">
-                  <h3><?php echo $dados->total_clientes;?> </h3>
+                  <h3><?php echo $dados->total_clientes; ?> </h3>
 
                   <p>Clientes</p>
                 </div>
@@ -159,7 +156,7 @@ if($dados->total_os == 0){
               <!-- small box -->
               <div class="small-box bg-gradient-danger">
                 <div class="inner">
-                  <h3><?php echo $dados->total_servicos;?></h3>
+                  <h3><?php echo $dados->total_servicos; ?></h3>
 
                   <p>Serviços</p>
                 </div>
@@ -275,27 +272,40 @@ if($dados->total_os == 0){
       });
 
 
-     <?php
-     $sql ="
-     SELECT COUNT(pk_ordem_servico) total,
-     DATE_FORMAT(data_ordem_servico, '%m/Y') mesAno
-     FROM ordens_servicos
-     GROUP BY DATE_FORMAT(data_ordem_servico, '%m/%Y')
-     ORDER BY data_ordem-servico
+      <?php
+      $sql = "
+     SELECT COUNT(pk_ordem_servico) total_os,
+     DATE_FORMAT(data_ordem_servico, '%b/%Y') mesAno,
+     (
+      SELECT COUNT(pk_ordem_servico)
+      FROM ordens_servicos
+      WHERE DATE_FORMAT(data_ordem_servico, '%m/%Y') = DATE_FORMAT(a.data_ordem_servico, '%m/%Y')
+      AND data_fim <> '0000-00-00'
+      ) total_concluidas
+     FROM ordens_servicos a
+     WHERE data_ordem_servico >= DATE_SUB(data_ordem_servico, INTERVAL 1 YEAR)
+     GROUP BY DATE_FORMAT(data_ordem_servico,'%m/%Y')
+     ORDER BY data_ordem_servico
      ";
-     try{
-      $stmt = $conn->prepare($sql);
-      $stmt->execute();
-      $dados = $stmt->fetchAll(PDO:: FETCH_OBJ);
+      try {
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $dados = $stmt->fetchAll(PDO::FETCH_OBJ);
 
-     }catch (PDOException $e){
-      echo "console.log('" . $e->getMessage() . "');";
-     }
-     ?>
+        $meses = array();
+        $valores = array();
+        foreach ($dados  as $key => $row) {
+          array_push($meses, "'$row->mesAno'");
+          array_push($valores, $row->total_os);
+        }
+      } catch (PDOException $e) {
+        echo "console.log('" . $e->getMessage() . "');";
+      }
+      ?>
 
       //=========================================================================================================================================
       var areaChartData = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: [<?php echo implode(",", $meses); ?>],
         datasets: [{
             label: 'O.S. concluídas',
             backgroundColor: 'rgba(60,141,188,0.9)',
@@ -316,7 +326,7 @@ if($dados->total_os == 0){
             pointStrokeColor: '#c1c7d1',
             pointHighlightFill: '#fff',
             pointHighlightStroke: 'rgba(220,220,220,1)',
-            data: [65, 59, 80, 81, 56, 55, 40]
+            data: [<?php echo implode(",", $valores); ?>]
           },
         ]
       }
@@ -343,7 +353,7 @@ if($dados->total_os == 0){
         options: barChartOptions
       })
 
-    })
+    });
   </script>
   <!--=====================================================================================================================-->
 </body>
