@@ -1,0 +1,18 @@
+rodrigo.timao_17@yahoo.com.br
+senha do dominio
+Senac2024
+
+====MYSQL HOST
+sql307.infinityfree.com
+
+   MYSQL USER NAME
+if0_36511517
+
+DB NAME
+if0_36511517_senac
+
+PASSWORD:Senac2024
+
+CPANEL
+infinityfree.com
+rodrigopalacio2015@hotmail.com
