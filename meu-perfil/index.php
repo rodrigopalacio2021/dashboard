@@ -194,8 +194,7 @@ if ($stmt->rowCount() > 0) {
 
     <!-- AdminLTE App -->
     <script src="../dist/js/adminlte.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="../dist/js/demo.js"></script>
+    
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="../dist/js/pages/dashboard.js"></script>
     <script src="http://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

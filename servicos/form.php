@@ -75,7 +75,7 @@ if(empty($_GET["ref"])){
 
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+            <img class="animation__shake" src="../SSS.jpg" alt="AdminLTELogo" height="60" width="60">
         </div>
 
         <!-- Navbar   -->
@@ -174,8 +174,7 @@ if(empty($_GET["ref"])){
     <!-- AdminLTE App -->
     <script src="../dist/js/adminlte.js"></script>
     <!-- AdminLTE for demo purposes -->
-    <script src="../dist/js/demo.js"></script>
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    
     <script src="../dist/js/pages/dashboard.js"></script>
 
 

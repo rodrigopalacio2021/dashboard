@@ -89,7 +89,7 @@ $pagina_ativa = 'servicos';
                         <th>OPÇÕES</th>
                       </tr>
                     </thead>
-                    <tbody class="table-success">
+                    <tbody class="table table-hover">
                       <!--========================================================================================-->
                       <?php //SINTAXE PARA FAZER A LIGAÇÃO DOS SERVIÇOS COM O BANCO DE DADOS
                       // MONTA A SINTAXE SQL PARA ENVIAR AO MYSQL
