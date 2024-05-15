@@ -49,6 +49,7 @@ try {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="./SSS.jpg" type="image/x-icon">
   <title>SSS | Página Inicial</title>
 
   <!-- Google Font: Source Sans Pro -->
